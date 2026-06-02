@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Journey of Fernando Banal | Portfolio</title>
+    <meta
+      name="description"
+      content="Interactive story-driven portfolio of Fernando Jr. H. Banal, Computer Engineer, full-stack developer, researcher, and systems builder."
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="ambient-grid" aria-hidden="true"></div>
+    <div class="particle-field" aria-hidden="true">
+      <span style="--x: 8%; --y: 18%; --d: 7s"></span>
+      <span style="--x: 18%; --y: 70%; --d: 11s"></span>
+      <span style="--x: 28%; --y: 38%; --d: 9s"></span>
+      <span style="--x: 42%; --y: 12%; --d: 13s"></span>
+      <span style="--x: 56%; --y: 78%; --d: 8s"></span>
+      <span style="--x: 69%; --y: 31%; --d: 12s"></span>
+      <span style="--x: 82%; --y: 62%; --d: 10s"></span>
+      <span style="--x: 92%; --y: 22%; --d: 14s"></span>
+    </div>
+
+    <div class="progress-rail" aria-hidden="true">
+      <span id="story-progress"></span>
+    </div>
+
+    <div class="page-shell">
+      <header class="site-header">
+        <a class="brand" href="#top" aria-label="Back to start">FHB</a>
+        <nav class="site-nav" aria-label="Primary navigation">
+          <a href="#map">Map</a>
+          <a href="#training">Skills</a>
+          <a href="#workshop">Projects</a>
+          <a href="#internship">Internship</a>
+          <a href="#research">Research</a>
+          <a href="#contact">Contact</a>
+        </nav>
+        <div class="header-actions">
+          <button class="icon-button" id="theme-toggle" type="button" aria-label="Toggle day mode">
+            <span aria-hidden="true">D</span>
+          </button>
+          <button class="icon-button" id="sound-toggle" type="button" aria-label="Toggle interface sound">
+            <span aria-hidden="true">S</span>
+          </button>
+          <a class="resume-button" href="assets/Banal_CV.pdf" download>Resume</a>
+        </div>
+      </header>
+
+      <main id="top">
+        <section class="hero chapter-section" id="map" data-chapter="World Map">
+          <div class="hero-copy" data-reveal>
+            <p class="status-line">Level: Fernando Banal</p>
+            <h1>The Journey of Fernando Banal</h1>
+            <p class="hero-lead">
+              A Computer Engineer's quest to build technology that solves real problems.
+            </p>
+            <p class="hero-summary">
+              Computer Engineering graduate with hands-on experience in full-stack development,
+              embedded systems, networking, and technical support. This portfolio turns the
+              resume into a guided story, while keeping the important recruiter paths one click away.
+            </p>
+            <div class="hero-actions">
+              <a class="button button-primary" href="#workshop">Start Quest</a>
+              <a class="button button-secondary" href="#contact">Contact Fernando</a>
+            </div>
+          </div>
+
+          <aside class="game-hud" data-reveal>
+            <div class="xp-card">
+              <div>
+                <span class="hud-label">XP Tracker</span>
+                <strong>7 Chapters</strong>
+              </div>
+              <div class="xp-bar" aria-label="Portfolio completion progress">
+                <span id="xp-fill"></span>
+              </div>
+              <p id="active-chapter">Current location: World Map</p>
+            </div>
+            <div class="stat-grid">
+              <article>
+                <strong>2026</strong>
+                <span>Computer Engineering</span>
+              </article>
+              <article>
+                <strong>4+</strong>
+                <span>Full-stack and IoT builds</span>
+              </article>
+              <article>
+                <strong>2</strong>
+                <span>Published research works</span>
+              </article>
+            </div>
+          </aside>
+
+          <div class="world-map" data-reveal aria-label="Interactive chapter map">
+            <a class="map-node is-active" href="#beginning" style="--left: 9%; --top: 58%">
+              <span>1</span>
+              Village of Curiosity
+            </a>
+            <a class="map-node" href="#training" style="--left: 24%; --top: 28%">
+              <span>2</span>
+              Training Grounds
+            </a>
+            <a class="map-node" href="#workshop" style="--left: 43%; --top: 63%">
+              <span>3</span>
+              Builder Workshop
+            </a>
+            <a class="map-node" href="#internship" style="--left: 58%; --top: 33%">
+              <span>4</span>
+              Internship City
+            </a>
+            <a class="map-node" href="#research" style="--left: 74%; --top: 61%">
+              <span>5</span>
+              Research Lab
+            </a>
+            <a class="map-node" href="#achievements" style="--left: 84%; --top: 23%">
+              <span>6</span>
+              Achievement Hall
+            </a>
+            <a class="map-node" href="#future" style="--left: 91%; --top: 77%">
+              <span>7</span>
+              Future Kingdom
+            </a>
+          </div>
+        </section>
+
+        <section class="chapter-section story-scene" id="beginning" data-chapter="Village of Curiosity">
+          <div class="chapter-heading" data-reveal>
+            <span class="chapter-number">Chapter 1</span>
+            <h2>The Beginning</h2>
+            <p>
+              "Every engineer starts somewhere. Mine started with a passion for understanding
+              how technology works."
+            </p>
+          </div>
+          <div class="scene-grid">
+            <article class="dialogue-panel" data-reveal>
+              <span class="npc-avatar" aria-hidden="true">FB</span>
+              <div>
+                <h3>Character Introduction</h3>
+                <p>
+                  Fernando Jr. H. Banal is a Computer Engineering graduate from Centro Escolar
+                  University, focused on software, systems, technical support, and practical
+                  automation for real operations.
+                </p>
+              </div>
+            </article>
+            <article class="info-terminal" data-reveal>
+              <h3>Quest Objective</h3>
+              <p>
+                Seek an entry-level software, systems, or IT role where full-stack development,
+                embedded systems, troubleshooting, and workflow discipline can create measurable value.
+              </p>
+              <ul class="compact-list">
+                <li>Email: <a href="mailto:fernandobanal23@gmail.com">fernandobanal23@gmail.com</a></li>
+                <li>GitHub: <a href="https://github.com/iamunholy" target="_blank" rel="noreferrer">github.com/iamunholy</a></li>
+                <li>LinkedIn: <a href="https://linkedin.com/in/fernandobanal" target="_blank" rel="noreferrer">linkedin.com/in/fernandobanal</a></li>
+              </ul>
+            </article>
+          </div>
+        </section>
+
+        <section class="chapter-section" id="training" data-chapter="Training Grounds">
+          <div class="chapter-heading" data-reveal>
+            <span class="chapter-number">Chapter 2</span>
+            <h2>The Training Grounds</h2>
+            <p>"Skills are earned through countless hours of learning and experimentation."</p>
+          </div>
+
+          <div class="skill-tree" data-reveal>
+            <article class="skill-path">
+              <h3>Frontend Path</h3>
+              <button data-skill="HTML">HTML</button>
+              <button data-skill="CSS">CSS</button>
+              <button data-skill="JavaScript">JavaScript</button>
+              <button data-skill="TypeScript">TypeScript</button>
+              <button data-skill="React">React</button>
+              <button data-skill="Bootstrap">Bootstrap</button>
+            </article>
+            <article class="skill-path">
+              <h3>Backend Path</h3>
+              <button data-skill="Node.js">Node.js</button>
+              <button data-skill="ASP.NET Core">ASP.NET Core</button>
+              <button data-skill="APIs">APIs</button>
+              <button data-skill="Authentication">Authentication</button>
+              <button data-skill="EF Core">EF Core</button>
+            </article>
+            <article class="skill-path">
+              <h3>Database Path</h3>
+              <button data-skill="SQL Server">SQL Server</button>
+              <button data-skill="PostgreSQL">PostgreSQL</button>
+              <button data-skill="MongoDB">MongoDB</button>
+              <button data-skill="Local Storage APIs">Local Storage APIs</button>
+            </article>
+            <article class="skill-path">
+              <h3>Systems Path</h3>
+              <button data-skill="Arduino">Arduino</button>
+              <button data-skill="RFID Systems">RFID Systems</button>
+              <button data-skill="AWS">AWS</button>
+              <button data-skill="Tailscale">Tailscale</button>
+              <button data-skill="Networking">Networking</button>
+            </article>
+          </div>
+        </section>
+
+        <section class="chapter-section" id="workshop" data-chapter="Builder Workshop">
+          <div class="chapter-heading" data-reveal>
+            <span class="chapter-number">Chapter 3</span>
+            <h2>The Builder's Workshop</h2>
+            <p>Projects open like quests, each one shaped around a real problem and a working system.</p>
+          </div>
+
+          <div class="quest-grid">
+            <article class="quest-card featured" data-reveal>
+              <div class="quest-media">
+                <video class="project-video" controls preload="metadata" playsinline>
+                  <source src="assets/rfid-robot-demo.mp4" type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+              <div class="quest-content">
+                <span class="quest-type">Research Quest</span>
+                <h3>Autonomous RFID-Equipped Robot for Inventory Management</h3>
+                <p>
+                  Award-winning RFID inventory robot with a full-stack web application for monitoring,
+                  control, and database management.
+                </p>
+                <button class="button button-secondary quest-open" data-quest="rfid" type="button">
+                  Open Quest
+                </button>
+              </div>
+            </article>
+
+            <article class="quest-card" data-reveal>
+              <span class="quest-type">Internship Quest</span>
+              <h3>Document &amp; Quotation Management System</h3>
+              <p>
+                Full-stack internal business tool for quotation tracking, file organization,
+                approval workflows, and document version management.
+              </p>
+              <button class="button button-secondary quest-open" data-quest="document" type="button">
+                Open Quest
+              </button>
+            </article>
+
+            <article class="quest-card" data-reveal>
+              <span class="quest-type">Platform Quest</span>
+              <h3>CEU HR Ecosystem</h3>
+              <p>
+                Full-stack HR management platform with applicant tracking, job posting management,
+                authentication, payroll, leave, and performance modules.
+              </p>
+              <button class="button button-secondary quest-open" data-quest="hr" type="button">
+                Open Quest
+              </button>
+            </article>
+
+            <article class="quest-card" data-reveal>
+              <span class="quest-type">Web App Quest</span>
+              <h3>Speed Typing Test Web Application</h3>
+              <p>
+                React and TypeScript app that measures WPM, accuracy, randomized typing tests,
+                lessons, and live performance statistics.
+              </p>
+              <a class="button button-secondary" href="https://speedtypingtest.lovable.app/" target="_blank" rel="noreferrer">
+                Visit App
+              </a>
+            </article>
+          </div>
+        </section>
+
+        <section class="chapter-section" id="internship" data-chapter="Internship City">
+          <div class="chapter-heading" data-reveal>
+            <span class="chapter-number">Chapter 4</span>
+            <h2>Internship Arc</h2>
+            <p>"My first real-world adventure."</p>
+          </div>
+
+          <div class="timeline-map">
+            <article class="timeline-card" data-reveal>
+              <span class="timeline-date">March 2026 - April 2026</span>
+              <h3>JREMD Technologies, Inc.</h3>
+              <p class="timeline-role">Systems Development and Technical Support Intern</p>
+              <ul>
+                <li>Developed responsive frontend enhancements for a document and quotation system.</li>
+                <li>Implemented file management and quotation tracking features.</li>
+                <li>Configured Tailscale remote access and deployment environments.</li>
+                <li>Supported switch configuration, internet troubleshooting, and equipment setup.</li>
+              </ul>
+            </article>
+
+            <article class="timeline-card" data-reveal>
+              <span class="timeline-date">March 3, 2026 - March 25, 2026</span>
+              <h3>Centro Escolar University</h3>
+              <p class="timeline-role">Computer Engineer Intern</p>
+              <ul>
+                <li>Supported laboratory operations and technical administrative workflows.</li>
+                <li>Prepared lab manuals, documentation, and instructional materials.</li>
+                <li>Organized digital learning resources and technical files for faculty and students.</li>
+                <li>Provided basic troubleshooting for laboratory systems and equipment.</li>
+              </ul>
+            </article>
+          </div>
+        </section>
+
+        <section class="chapter-section research-scene" id="research" data-chapter="Research Lab">
+          <div class="chapter-heading" data-reveal>
+            <span class="chapter-number">Chapter 5</span>
+            <h2>Research Laboratory</h2>
+            <p>
+              Development of real-time RFID-enabled inventory management hardware for streamlining
+              operations in retail and logistics.
+            </p>
+          </div>
+
+          <div class="research-grid">
+            <article class="research-roadmap" data-reveal>
+              <h3>Prototype Roadmap</h3>
+              <ol>
+                <li>RFID scanning and asset identification</li>
+                <li>Robot movement, sensor input, and navigation workflow</li>
+                <li>Web dashboard for monitoring, control, and database access</li>
+                <li>Testing, debugging, award presentation, and publication</li>
+              </ol>
+            </article>
+            <article class="node-diagram" data-reveal aria-label="Animated research system diagram">
+              <span class="diagram-node robot">Robot</span>
+              <span class="diagram-node rfid">RFID</span>
+              <span class="diagram-node cloud">AWS</span>
+              <span class="diagram-node dashboard">Dashboard</span>
+              <span class="diagram-line line-one"></span>
+              <span class="diagram-line line-two"></span>
+              <span class="diagram-line line-three"></span>
+            </article>
+          </div>
+        </section>
+
+        <section class="chapter-section" id="achievements" data-chapter="Achievement Hall">
+          <div class="chapter-heading" data-reveal>
+            <span class="chapter-number">Chapter 6</span>
+            <h2>Achievement Hall</h2>
+            <p>Each unlocked badge represents technical growth, research work, or leadership practice.</p>
+          </div>
+
+          <div class="badge-grid">
+            <button class="badge-card" data-achievement="Full-Stack Developer" type="button" data-reveal>
+              <span>FS</span>
+              <strong>Full-Stack Developer</strong>
+              <small>Document system, HR platform, web dashboards</small>
+            </button>
+            <button class="badge-card" data-achievement="Research Innovator" type="button" data-reveal>
+              <span>RI</span>
+              <strong>Research Innovator</strong>
+              <small>Published RFID robot and LMS research work</small>
+            </button>
+            <button class="badge-card" data-achievement="RFID Specialist" type="button" data-reveal>
+              <span>RF</span>
+              <strong>RFID Specialist</strong>
+              <small>Inventory automation with hardware and web systems</small>
+            </button>
+            <button class="badge-card" data-achievement="Problem Solver" type="button" data-reveal>
+              <span>PS</span>
+              <strong>Problem Solver</strong>
+              <small>Troubleshooting, workflow automation, technical support</small>
+            </button>
+            <button class="badge-card" data-achievement="Team Leader" type="button" data-reveal>
+              <span>TL</span>
+              <strong>Team Leader</strong>
+              <small>Volleyball coaching, program development, coordination</small>
+            </button>
+          </div>
+        </section>
+
+        <section class="chapter-section future-scene" id="future" data-chapter="Future Kingdom">
+          <div class="chapter-heading" data-reveal>
+            <span class="chapter-number">Chapter 7</span>
+            <h2>Future Vision</h2>
+            <p>"The journey is still ongoing."</p>
+          </div>
+          <div class="future-grid">
+            <article data-reveal>
+              <h3>Next Objectives</h3>
+              <ul class="quest-list">
+                <li>Become a full-stack software engineer</li>
+                <li>Build SaaS products and scalable business systems</li>
+                <li>Launch technology startups with practical operations value</li>
+                <li>Develop AI-powered applications and automation tools</li>
+              </ul>
+            </article>
+            <article class="city-panel" data-reveal>
+              <span class="city-block"></span>
+              <span class="city-block"></span>
+              <span class="city-block"></span>
+              <span class="city-block"></span>
+            </article>
+          </div>
+        </section>
+
+        <section class="chapter-section contact-section" id="contact" data-chapter="Contact Portal">
+          <div class="contact-panel" data-reveal>
+            <div>
+              <span class="chapter-number">Final Portal</span>
+              <h2>Ready for the next quest?</h2>
+              <p>
+                Open to entry-level software, systems, IT, and build-focused opportunities.
+              </p>
+            </div>
+            <div class="contact-actions">
+              <a class="button button-primary" href="mailto:fernandobanal23@gmail.com">Email Fernando</a>
+              <a class="button button-secondary" href="tel:+639270882907">Call</a>
+              <a class="button button-secondary" href="assets/Banal_CV.pdf" download>Download CV</a>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <p>(c) <span id="current-year"></span> Fernando Jr. H. Banal</p>
+      </footer>
+    </div>
+
+    <dialog class="detail-modal" id="detail-modal">
+      <button class="modal-close" id="modal-close" type="button" aria-label="Close details">x</button>
+      <div id="modal-content"></div>
+    </dialog>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script src="./script.js"></script>
+  </body>
+</html>

@@ -1,0 +1,9 @@
+.codex/
+.git/
+.github/
+.npm-cache/
+.vercel/
+.vscode/
+.idea/
+node_modules/
+server.js
