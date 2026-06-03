@@ -8,20 +8,20 @@
       name="description"
       content="Interactive story-driven portfolio of Fernando Jr. H. Banal, Computer Engineer, full-stack developer, researcher, and systems builder."
     />
+    <!-- Open Graph / SEO -->
+    <meta property="og:title" content="The Journey of Fernando Banal | Portfolio" />
+    <meta property="og:description" content="Interactive story-driven portfolio of Fernando Jr. H. Banal, Computer Engineer, full-stack developer, researcher, and systems builder." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@400;600;700;900&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
     <div class="ambient-grid" aria-hidden="true"></div>
-    <div class="particle-field" aria-hidden="true">
-      <span style="--x: 8%; --y: 18%; --d: 7s"></span>
-      <span style="--x: 18%; --y: 70%; --d: 11s"></span>
-      <span style="--x: 28%; --y: 38%; --d: 9s"></span>
-      <span style="--x: 42%; --y: 12%; --d: 13s"></span>
-      <span style="--x: 56%; --y: 78%; --d: 8s"></span>
-      <span style="--x: 69%; --y: 31%; --d: 12s"></span>
-      <span style="--x: 82%; --y: 62%; --d: 10s"></span>
-      <span style="--x: 92%; --y: 22%; --d: 14s"></span>
-    </div>
+    <canvas id="canvas-bg" class="canvas-bg" aria-hidden="true"></canvas>
 
     <div class="progress-rail" aria-hidden="true">
       <span id="story-progress"></span>
@@ -53,7 +53,7 @@
         <section class="hero chapter-section" id="map" data-chapter="World Map">
           <div class="hero-copy" data-reveal>
             <p class="status-line">Level: Fernando Banal</p>
-            <h1>The Journey of Fernando Banal</h1>
+            <h1><span class="typing-container"></span><span class="typing-cursor">_</span></h1>
             <p class="hero-lead">
               A Computer Engineer's quest to build technology that solves real problems.
             </p>
@@ -216,7 +216,7 @@
           <div class="quest-grid">
             <article class="quest-card featured" data-reveal>
               <div class="quest-media">
-                <video class="project-video" controls preload="metadata" playsinline>
+              <video class="project-video" controls preload="none" playsinline loading="lazy">
                   <source src="assets/rfid-robot-demo.mp4" type="video/mp4" />
                   Your browser does not support the video tag.
                 </video>
