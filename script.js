@@ -116,6 +116,137 @@ const skillDetails = {
   },
 };
 
+class ParticleSystem {
+  constructor(canvasId) {
+    this.canvas = document.getElementById(canvasId);
+    if (!this.canvas) return;
+    this.ctx = this.canvas.getContext("2d", { alpha: true });
+    this.particles = [];
+    this.mouse = { x: null, y: null, radius: 150 };
+    this.colors = ["#38bdf8", "#8b5cf6", "#22d3ee"];
+
+    this.init();
+    this.animate();
+
+    window.addEventListener("resize", () => {
+      this.resize();
+      this.initParticles();
+    });
+
+    window.addEventListener("mousemove", (e) => {
+      this.mouse.x = e.x;
+      this.mouse.y = e.y;
+    });
+
+    window.addEventListener("mouseout", () => {
+      this.mouse.x = null;
+      this.mouse.y = null;
+    });
+  }
+
+  resize() {
+    this.canvas.width = window.innerWidth;
+    this.canvas.height = window.innerHeight;
+  }
+
+  initParticles() {
+    this.particles = [];
+    const particleCount = Math.min((window.innerWidth * window.innerHeight) / 12000, 100);
+
+    for (let i = 0; i < particleCount; i++) {
+      const size = Math.random() * 2 + 1;
+      const x = Math.random() * (this.canvas.width - size * 2) + size;
+      const y = Math.random() * (this.canvas.height - size * 2) + size;
+      const velocityX = (Math.random() - 0.5) * 0.5;
+      const velocityY = (Math.random() - 0.5) * 0.5;
+      const color = this.colors[Math.floor(Math.random() * this.colors.length)];
+
+      this.particles.push({
+        x, y, size, velocityX, velocityY, color, baseSize: size
+      });
+    }
+  }
+
+  init() {
+    this.resize();
+    this.initParticles();
+  }
+
+  drawParticle(p) {
+    this.ctx.beginPath();
+    this.ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+    this.ctx.fillStyle = p.color;
+    this.ctx.globalAlpha = 0.6;
+    this.ctx.fill();
+    this.ctx.globalAlpha = 1;
+  }
+
+  updateParticle(p) {
+    p.x += p.velocityX;
+    p.y += p.velocityY;
+
+    if (p.x + p.size > this.canvas.width || p.x - p.size < 0) {
+      p.velocityX = -p.velocityX;
+    }
+    if (p.y + p.size > this.canvas.height || p.y - p.size < 0) {
+      p.velocityY = -p.velocityY;
+    }
+
+    // Interactivity
+    if (this.mouse.x != null && this.mouse.y != null) {
+      const dx = this.mouse.x - p.x;
+      const dy = this.mouse.y - p.y;
+      const distance = Math.sqrt(dx * dx + dy * dy);
+
+      if (distance < this.mouse.radius) {
+        const forceDirectionX = dx / distance;
+        const forceDirectionY = dy / distance;
+        const force = (this.mouse.radius - distance) / this.mouse.radius;
+        const maxDistance = 3;
+
+        p.x -= forceDirectionX * force * maxDistance;
+        p.y -= forceDirectionY * force * maxDistance;
+      }
+    }
+  }
+
+  connectParticles() {
+    for (let a = 0; a < this.particles.length; a++) {
+      for (let b = a; b < this.particles.length; b++) {
+        const dx = this.particles[a].x - this.particles[b].x;
+        const dy = this.particles[a].y - this.particles[b].y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+
+        if (distance < 120) {
+          const opacity = 1 - distance / 120;
+          this.ctx.strokeStyle = `rgba(56, 189, 248, ${opacity * 0.2})`;
+          this.ctx.lineWidth = 1;
+          this.ctx.beginPath();
+          this.ctx.moveTo(this.particles[a].x, this.particles[a].y);
+          this.ctx.lineTo(this.particles[b].x, this.particles[b].y);
+          this.ctx.stroke();
+        }
+      }
+    }
+  }
+
+  animate() {
+    requestAnimationFrame(this.animate.bind(this));
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+    for (let i = 0; i < this.particles.length; i++) {
+      this.updateParticle(this.particles[i]);
+      this.drawParticle(this.particles[i]);
+    }
+    this.connectParticles();
+  }
+}
+
+// Initialize on load if reduced motion is not preferred
+if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  new ParticleSystem("canvas-bg");
+}
+
 const questDetails = {
   rfid: {
     title: "Autonomous RFID-Equipped Robot for Inventory Management",
@@ -332,5 +463,54 @@ brand.addEventListener("click", () => {
 window.addEventListener("scroll", updateStoryProgress, { passive: true });
 window.addEventListener("resize", updateStoryProgress);
 updateStoryProgress();
+
+// Typing Animation
+const typingText = "The Journey of Fernando Banal";
+const typingContainer = document.querySelector(".typing-container");
+let charIndex = 0;
+
+function typeText() {
+  if (typingContainer && charIndex < typingText.length) {
+    typingContainer.textContent += typingText.charAt(charIndex);
+    charIndex++;
+    setTimeout(typeText, 60 + Math.random() * 40); // Natural typing speed
+  } else {
+    document.querySelector('.typing-cursor').style.animation = 'blink 1s step-end infinite';
+  }
+}
+
+// 3D Tilt Effect for Quest Cards
+const cards = document.querySelectorAll(".quest-card, .timeline-card");
+
+cards.forEach((card) => {
+  card.addEventListener("mousemove", (e) => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+
+    const rotateX = ((y - centerY) / centerY) * -5;
+    const rotateY = ((x - centerX) / centerX) * 5;
+
+    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-8px)`;
+  });
+
+  card.addEventListener("mouseleave", () => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    card.style.transform = "perspective(1000px) rotateX(0) rotateY(0) translateY(0)";
+    setTimeout(() => {
+      card.style.transform = ""; // Reset to CSS hover state
+    }, 300);
+  });
+});
+
+// Initialize
+if (typingContainer) {
+  setTimeout(typeText, 500);
+}
 
 document.getElementById("current-year").textContent = new Date().getFullYear();
