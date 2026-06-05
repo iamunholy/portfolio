@@ -2,7 +2,7 @@ const http = require("http");
 const fs = require("fs");
 const path = require("path");
 
-const port = Number(process.env.PORT) || 4173;
+const port = Number(process.env.PORT) || 4174;
 const root = __dirname;
 
 const mimeTypes = {
@@ -20,7 +20,17 @@ const mimeTypes = {
 
 http
   .createServer((request, response) => {
-    const cleanPath = request.url === "/" ? "/index.html" : request.url.split("?")[0];
+    const requestPath = request.url === "/" ? "/index.html" : request.url.split("?")[0];
+    let cleanPath;
+
+    try {
+      cleanPath = decodeURIComponent(requestPath);
+    } catch {
+      response.writeHead(400);
+      response.end("Bad Request");
+      return;
+    }
+
     const filePath = path.normalize(path.join(root, cleanPath));
 
     if (!filePath.startsWith(root)) {

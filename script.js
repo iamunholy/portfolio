@@ -3,7 +3,6 @@ const sections = [...document.querySelectorAll("[data-chapter]")];
 const navLinks = [...document.querySelectorAll(".site-nav a")];
 const mapNodes = [...document.querySelectorAll(".map-node")];
 const storyProgress = document.getElementById("story-progress");
-const xpFill = document.getElementById("xp-fill");
 const activeChapter = document.getElementById("active-chapter");
 const modal = document.getElementById("detail-modal");
 const modalContent = document.getElementById("modal-content");
@@ -12,72 +11,83 @@ const toast = document.getElementById("toast");
 const themeToggle = document.getElementById("theme-toggle");
 const soundToggle = document.getElementById("sound-toggle");
 const brand = document.querySelector(".brand");
+const mobileButtons = [...document.querySelectorAll(".mobile-pad button")];
 
 const skillDetails = {
   HTML: {
     level: "Advanced",
-    projects: "Document & Quotation System, RFID dashboard, portfolio interfaces",
-    experience: "Used across frontend builds and technical documentation workflows.",
+    projects: "Portfolio UI, document system, research dashboard",
+    experience: "Used for structure, accessible markup, and content-heavy interfaces.",
   },
   CSS: {
     level: "Advanced",
-    projects: "Responsive web interfaces, dashboard UI, portfolio experience",
-    experience: "Applied for layouts, responsive design, animation, and visual polish.",
+    projects: "Retro portfolio, dashboards, responsive layouts",
+    experience: "Used for visual systems, animation, and responsive interface design.",
   },
   JavaScript: {
     level: "Advanced",
-    projects: "Document system, RFID web app, interactive portfolio",
-    experience: "Used for interface logic, local storage, tracking flows, and UI behavior.",
+    projects: "Portfolio interactions, project tools, workflow apps",
+    experience: "Used for DOM logic, local state, and product behavior.",
   },
   TypeScript: {
     level: "Intermediate",
     projects: "Speed Typing Test Web Application",
-    experience: "Used with React for typed frontend workflows and performance tracking.",
+    experience: "Used with React for typed frontend workflows and statistics.",
   },
   React: {
     level: "Intermediate",
     projects: "Speed Typing Test Web Application",
     experience: "Used to build responsive application UI and live statistics interactions.",
   },
-  Bootstrap: {
-    level: "Intermediate",
-    projects: "CEU HR Ecosystem",
-    experience: "Used for structured, responsive business application screens.",
-  },
-  "Node.js": {
-    level: "Intermediate",
-    projects: "Document & Quotation Management System",
-    experience: "Used for workflow features, file management, and operational tracking.",
-  },
   "ASP.NET Core": {
     level: "Intermediate",
     projects: "CEU HR Ecosystem",
     experience: "Used for Web API backend modules and service integration.",
   },
+  "Node.js": {
+    level: "Intermediate",
+    projects: "Document & Quotation Management System",
+    experience: "Used for workflow features, file handling, and operational tools.",
+  },
   APIs: {
     level: "Intermediate",
-    projects: "CEU HR Ecosystem, RFID dashboard",
-    experience: "Used for data handling, dashboard integration, and role-based workflows.",
+    projects: "Dashboard integrations and backend services",
+    experience: "Used for data handling and system communication.",
   },
   Authentication: {
     level: "Intermediate",
-    projects: "CEU HR Ecosystem, Document system",
-    experience: "Applied in role management and protected workflow modules.",
+    projects: "CEU HR Ecosystem, document system",
+    experience: "Used in access control and role-based workflows.",
   },
-  "EF Core": {
-    level: "Learning by building",
-    projects: "CEU HR Ecosystem",
-    experience: "Used with ASP.NET Core and SQL Server Express for platform data access.",
-  },
-  "SQL Server": {
+  Bootstrap: {
     level: "Intermediate",
     projects: "CEU HR Ecosystem",
-    experience: "Used for business modules, relational records, and application data.",
+    experience: "Used for responsive styling and UI components.",
+  },
+  Python: {
+    level: "Familiar",
+    projects: "Academic coursework and script automation",
+    experience: "Used for scripting, data manipulation, and basic logic.",
+  },
+  Git: {
+    level: "Intermediate",
+    projects: "All development projects",
+    experience: "Used for version control, branching, and repository management.",
   },
   PostgreSQL: {
     level: "Intermediate",
     projects: "Speed Typing Test Web Application",
-    experience: "Used for app data persistence in a React and TypeScript project.",
+    experience: "Used for persistence in full-stack application work.",
+  },
+  "SQL Server": {
+    level: "Intermediate",
+    projects: "CEU HR Ecosystem",
+    experience: "Used for business modules and relational records.",
+  },
+  SQL: {
+    level: "Intermediate",
+    projects: "CEU HR Ecosystem, relational databases",
+    experience: "Used for complex queries, joins, and data manipulation.",
   },
   MongoDB: {
     level: "Familiar",
@@ -102,17 +112,17 @@ const skillDetails = {
   AWS: {
     level: "Familiar",
     projects: "RFID inventory web application deployment",
-    experience: "Used as part of deployment planning for inventory monitoring systems.",
-  },
-  Tailscale: {
-    level: "Practical internship experience",
-    projects: "JREMD remote access and deployment setup",
-    experience: "Configured remote access environments for office and development workflows.",
+    experience: "Used as part of deployment planning and cloud delivery.",
   },
   Networking: {
     level: "Practical internship experience",
     projects: "Switch configuration, FDAS, CCTV, troubleshooting",
     experience: "Used in technical support, office setup, and systems operations.",
+  },
+  "C++": {
+    level: "Intermediate",
+    projects: "Hardware automation and Arduino",
+    experience: "Used extensively in embedded systems and microcontrollers.",
   },
 };
 
@@ -141,13 +151,72 @@ const questDetails = {
   },
   hr: {
     title: "CEU HR Ecosystem",
-    summary:
-      "An ongoing full-stack HR management platform built around institutional HR workflows.",
+    summary: "An ongoing full-stack HR management platform built around institutional HR workflows.",
     points: [
       "Includes applicant tracking, job posting management, authentication, payroll, leave management, and performance monitoring modules.",
       "Uses C# ASP.NET Core Web API, EF Core, HTML, CSS, JavaScript, Bootstrap, and SQL Server Express.",
       "Designed responsive user interfaces and integrated backend services for role management and data handling.",
     ],
+  },
+  ceu_intern: {
+    title: "Computer Engineer Intern | Centro Escolar University",
+    summary: "Provided technical administrative support and optimized laboratory operations.",
+    points: [
+      "Optimized laboratory operations and technical administrative support for BSIT-related activities.",
+      "Prepared and updated laboratory manuals, documentation, and instructional materials.",
+      "Organized digital learning resources and technical files for faculty and student use.",
+      "Provided basic troubleshooting and technical support for laboratory systems and equipment.",
+      "Supported academic technology initiatives and documentation workflows."
+    ],
+  },
+  volleyball: {
+    title: "Volleyball Coach & Program Developer | Passion Sports",
+    summary: "Leadership role focused on structured athletic development and performance.",
+    points: [
+      "Designed structured volleyball training programs focused on athlete development and performance improvement.",
+      "Demonstrates leadership, communication, and the ability to coach players toward consistent process adoption."
+    ],
+  },
+  legal_admin: {
+    title: "Legal Administrative Coordinator | Iguidez-Onida Law",
+    summary: "Managed confidential documents and coordinated firm operations.",
+    points: [
+      "Managed confidential legal documents and client information with close attention to organization and security.",
+      "Coordinated schedules, client communications, and case-file organization using digital management practices."
+    ],
+  },
+};
+
+const pokedexEntries = {
+  Reactmon: {
+    type: "Frontend",
+    level: 90,
+    description: "A powerful library used for building modern user interfaces and reusable component systems.",
+  },
+  Nodechu: {
+    type: "Backend",
+    level: 85,
+    description: "Known for handling APIs, servers, and workflow logic efficiently.",
+  },
+  Postgreon: {
+    type: "Database",
+    level: 82,
+    description: "A dependable relational engine for app data, analytics, and persistence.",
+  },
+  Rfidra: {
+    type: "Hardware",
+    level: 88,
+    description: "An embedded systems specialist that excels at RFID scanning and physical automation.",
+  },
+  Awsaur: {
+    type: "Deployment",
+    level: 76,
+    description: "A cloud partner that helps launch services and support scalable delivery.",
+  },
+  Tailspin: {
+    type: "Remote Access",
+    level: 72,
+    description: "A stealthy network helper used for secure remote connectivity and deployment setup.",
   },
 };
 
@@ -175,11 +244,16 @@ revealElements.forEach((element) => revealObserver.observe(element));
 const sectionObserver = new IntersectionObserver(
   (entries) => {
     entries.forEach((entry) => {
-      if (!entry.isIntersecting) return;
+      if (!entry.isIntersecting) {
+        return;
+      }
 
       const chapter = entry.target.dataset.chapter;
       const id = entry.target.id;
-      activeChapter.textContent = `Current location: ${chapter}`;
+
+      if (activeChapter) {
+        activeChapter.textContent = `Current location: ${chapter}`;
+      }
 
       navLinks.forEach((link) => {
         link.classList.toggle("is-active", link.getAttribute("href") === `#${id}`);
@@ -190,8 +264,6 @@ const sectionObserver = new IntersectionObserver(
       });
 
       const index = Math.max(0, sections.findIndex((section) => section.id === id));
-      const progress = Math.round(((index + 1) / sections.length) * 100);
-      xpFill.style.width = `${Math.max(12, progress)}%`;
     });
   },
   {
@@ -205,11 +277,15 @@ function updateStoryProgress() {
   const scrollTop = window.scrollY || document.documentElement.scrollTop;
   const height = document.documentElement.scrollHeight - window.innerHeight;
   const progress = height > 0 ? (scrollTop / height) * 100 : 0;
-  storyProgress.style.width = `${Math.min(100, Math.max(0, progress))}%`;
+  if (storyProgress) {
+    storyProgress.style.width = `${Math.min(100, Math.max(0, progress))}%`;
+  }
 }
 
 function playTone() {
-  if (!soundEnabled) return;
+  if (!soundEnabled) {
+    return;
+  }
 
   audioContext ||= new AudioContext();
   const oscillator = audioContext.createOscillator();
@@ -225,6 +301,10 @@ function playTone() {
 }
 
 function showToast(message) {
+  if (!toast) {
+    return;
+  }
+
   toast.textContent = message;
   toast.classList.add("is-visible");
   window.clearTimeout(showToast.timer);
@@ -234,6 +314,10 @@ function showToast(message) {
 }
 
 function openModal(title, summary, points) {
+  if (!modalContent || !modal) {
+    return;
+  }
+
   modalContent.innerHTML = `
     <h3>${title}</h3>
     <p>${summary}</p>
@@ -253,6 +337,11 @@ document.querySelectorAll("[data-skill]").forEach((button) => {
   button.addEventListener("click", () => {
     const name = button.dataset.skill;
     const detail = skillDetails[name];
+
+    if (!detail) {
+      return;
+    }
+
     openModal(name, `Proficiency: ${detail.level}`, [
       `Projects using this skill: ${detail.projects}`,
       detail.experience,
@@ -263,7 +352,9 @@ document.querySelectorAll("[data-skill]").forEach((button) => {
 document.querySelectorAll("[data-quest]").forEach((button) => {
   button.addEventListener("click", () => {
     const detail = questDetails[button.dataset.quest];
-    openModal(detail.title, detail.summary, detail.points);
+    if (detail) {
+      openModal(detail.title, detail.summary, detail.points);
+    }
   });
 });
 
@@ -274,19 +365,30 @@ document.querySelectorAll("[data-achievement]").forEach((button) => {
   });
 });
 
+document.querySelectorAll("[data-entry]").forEach((button) => {
+  button.addEventListener("click", () => {
+    const entry = pokedexEntries[button.dataset.entry];
+    if (!entry) {
+      return;
+    }
+
+    openModal(button.dataset.entry, `${entry.type} type | Level ${entry.level}`, [entry.description, "Collected in Fernando's tech Pokédex."]);
+  });
+});
+
 document.querySelectorAll("a, button").forEach((element) => {
   element.addEventListener("click", () => {
-    if (!element.matches("[data-skill], [data-quest], [data-achievement]")) {
+    if (!element.matches("[data-skill], [data-quest], [data-achievement], [data-entry]")) {
       playTone();
     }
   });
 });
 
-modalClose.addEventListener("click", () => {
-  modal.close();
+modalClose?.addEventListener("click", () => {
+  modal?.close();
 });
 
-modal.addEventListener("click", (event) => {
+modal?.addEventListener("click", (event) => {
   const modalBox = modal.getBoundingClientRect();
   const isOutside =
     event.clientX < modalBox.left ||
@@ -299,18 +401,16 @@ modal.addEventListener("click", (event) => {
   }
 });
 
-themeToggle.addEventListener("click", () => {
+themeToggle?.addEventListener("click", () => {
   document.body.classList.toggle("day-mode");
   const isDay = document.body.classList.contains("day-mode");
-  themeToggle.querySelector("span").textContent = isDay ? "N" : "D";
   themeToggle.setAttribute("aria-label", isDay ? "Toggle night mode" : "Toggle day mode");
   showToast(isDay ? "Day mode activated" : "Night mode activated");
 });
 
-soundToggle.addEventListener("click", () => {
+soundToggle?.addEventListener("click", () => {
   soundEnabled = !soundEnabled;
   soundToggle.classList.toggle("is-active", soundEnabled);
-  soundToggle.querySelector("span").textContent = soundEnabled ? "On" : "S";
   soundToggle.setAttribute(
     "aria-label",
     soundEnabled ? "Turn interface sound off" : "Turn interface sound on"
@@ -319,13 +419,64 @@ soundToggle.addEventListener("click", () => {
   playTone();
 });
 
-brand.addEventListener("click", () => {
+brand?.addEventListener("click", () => {
   brandClicks += 1;
 
   if (brandClicks === 5) {
     showToast("Secret achievement unlocked: Persistent Builder");
-    xpFill.style.width = "100%";
+    if (storyProgress) {
+      storyProgress.style.width = "100%";
+    }
     playTone();
+  }
+});
+
+function scrollByViewport(direction) {
+  const amount = Math.round(window.innerHeight * 0.72);
+  const horizontal = Math.round(window.innerWidth * 0.5);
+
+  switch (direction) {
+    case "up":
+      window.scrollBy({ top: -amount, behavior: "smooth" });
+      break;
+    case "down":
+      window.scrollBy({ top: amount, behavior: "smooth" });
+      break;
+    case "left":
+      window.scrollBy({ left: -horizontal, behavior: "smooth" });
+      break;
+    case "right":
+      window.scrollBy({ left: horizontal, behavior: "smooth" });
+      break;
+    default:
+      break;
+  }
+
+  showToast(`Moved ${direction}`);
+  playTone();
+}
+
+mobileButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    scrollByViewport(button.dataset.direction);
+  });
+});
+
+window.addEventListener("keydown", (event) => {
+  if (event.altKey || event.metaKey || event.ctrlKey) {
+    return;
+  }
+
+  const key = event.key.toLowerCase();
+
+  if (["arrowup", "w"].includes(key)) {
+    scrollByViewport("up");
+  } else if (["arrowdown", "s"].includes(key)) {
+    scrollByViewport("down");
+  } else if (["arrowleft", "a"].includes(key)) {
+    scrollByViewport("left");
+  } else if (["arrowright", "d"].includes(key)) {
+    scrollByViewport("right");
   }
 });
 
@@ -333,4 +484,7 @@ window.addEventListener("scroll", updateStoryProgress, { passive: true });
 window.addEventListener("resize", updateStoryProgress);
 updateStoryProgress();
 
-document.getElementById("current-year").textContent = new Date().getFullYear();
+const currentYear = document.getElementById("current-year");
+if (currentYear) {
+  currentYear.textContent = new Date().getFullYear();
+}
