@@ -20,6 +20,12 @@
   <audio id="audio-bg" src="resources/Pokemon%20BG%20Music.mp3" preload="auto" loop></audio>
   <audio id="audio-click" src="resources/Pokemon%20Click%20Button.mp3" preload="auto"></audio>
 
+  <!-- Global Audio Toggle Button -->
+  <button id="btn-audio-toggle" class="retro-btn audio-btn">
+    <span class="icon">♪</span>
+    <span class="text">ON</span>
+  </button>
+
   <!-- Interactive Intro Sequence -->
   <div id="intro-container">
     
@@ -71,7 +77,7 @@
       <!-- Trainer Character (Center Right) -->
       <div class="oak-trainer-graphic">
         <div class="trainer-shadow"></div>
-        <img src="assets/fernando_trainer.png" alt="Trainer Fernando">
+        <div id="trainer-sprite" class="trainer-sprite" aria-label="Trainer Fernando"></div>
       </div>
       
       <!-- Dialogue Box (Bottom) -->

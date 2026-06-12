@@ -26,12 +26,14 @@ const contentContainer = document.getElementById('content-container');
 const contentSections = document.querySelectorAll('.content-section');
 const menuItems = document.querySelectorAll('.menu-item');
 const btnBack = document.getElementById('btn-back');
+const btnAudioToggle = document.getElementById('btn-audio-toggle');
 
 // --- State ---
 let currentState = 'START_OVERLAY'; // START_OVERLAY, BOOT, TITLE, MENU_DIALOGUE, MENU_CHOICE, CONTENT
 let activeMenuIndex = 0;
 let audioUnlocked = false;
 let bootSkipAllowed = false;
+let isGlobalMuted = false;
 
 // --- Dialogue State ---
 let dialogueStep = 0;
@@ -255,6 +257,32 @@ function proceedToMenu() {
 }
 
 // --- Event Listeners ---
+
+btnAudioToggle.addEventListener('click', (e) => {
+  e.stopPropagation();
+  isGlobalMuted = !isGlobalMuted;
+  
+  audioIntro.muted = isGlobalMuted;
+  audioBg.muted = isGlobalMuted;
+  audioClick.muted = isGlobalMuted;
+  bootVideo.muted = isGlobalMuted;
+  introVideo.muted = isGlobalMuted;
+  
+  const projectVideos = document.querySelectorAll('.project-video');
+  projectVideos.forEach(v => v.muted = isGlobalMuted);
+
+  if (isGlobalMuted) {
+    btnAudioToggle.classList.add('muted');
+    btnAudioToggle.querySelector('.text').innerText = 'OFF';
+  } else {
+    btnAudioToggle.classList.remove('muted');
+    btnAudioToggle.querySelector('.text').innerText = 'ON';
+    if (!audioUnlocked && currentState !== 'START_OVERLAY') {
+       tryPlayIntro();
+    }
+    if (!isGlobalMuted) playClick();
+  }
+});
 
 // Any click unlocks audio if not already unlocked
 document.addEventListener('click', (e) => {
