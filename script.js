@@ -43,8 +43,6 @@ const introDialogue = [
 const oakText = document.getElementById('oak-text');
 const oakChoices = document.getElementById('oak-choices');
 const oakNextArrow = document.getElementById('oak-next-arrow');
-const musicToggle = document.getElementById('music-toggle');
-let isMuted = false;
 
 // --- Typewriter State ---
 const sectionContentMap = {};
@@ -123,7 +121,6 @@ startOverlay.addEventListener('click', () => {
 function startBootSequence() {
   currentState = 'BOOT';
   bootVideo.classList.remove('hidden');
-  musicToggle.classList.remove('hidden');
   bootVideo.play().catch(e => console.log(e));
   
   // Allow skip after 3 seconds
@@ -258,23 +255,6 @@ function proceedToMenu() {
 }
 
 // --- Event Listeners ---
-
-musicToggle.addEventListener('click', (e) => {
-  e.stopPropagation();
-  isMuted = !isMuted;
-  
-  audioIntro.muted = isMuted;
-  audioBg.muted = isMuted;
-  
-  if (isMuted) {
-    musicToggle.innerText = '🔇 MUSIC OFF';
-  } else {
-    musicToggle.innerText = '🔊 MUSIC ON';
-  }
-  
-  // optionally, we don't play click sound here if they are turning off audio
-  if (!isMuted) playClick();
-});
 
 // Any click unlocks audio if not already unlocked
 document.addEventListener('click', (e) => {
