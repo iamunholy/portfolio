@@ -93,12 +93,6 @@ function typeWriterHTML(element, htmlContent, speed, callback = null) {
         type(); // Process HTML tags instantly
       } else {
         element.innerHTML = textBuffer;
-        
-        // Typing audio (beep every 3 chars)
-        if (char !== ' ' && i % 3 === 0 && audioUnlocked) {
-          playClick();
-        }
-        
         typingInterval = setTimeout(type, speed);
       }
     } else {
