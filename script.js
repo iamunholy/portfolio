@@ -1,490 +1,338 @@
-const revealElements = document.querySelectorAll("[data-reveal]");
-const sections = [...document.querySelectorAll("[data-chapter]")];
-const navLinks = [...document.querySelectorAll(".site-nav a")];
-const mapNodes = [...document.querySelectorAll(".map-node")];
-const storyProgress = document.getElementById("story-progress");
-const activeChapter = document.getElementById("active-chapter");
-const modal = document.getElementById("detail-modal");
-const modalContent = document.getElementById("modal-content");
-const modalClose = document.getElementById("modal-close");
-const toast = document.getElementById("toast");
-const themeToggle = document.getElementById("theme-toggle");
-const soundToggle = document.getElementById("sound-toggle");
-const brand = document.querySelector(".brand");
-const mobileButtons = [...document.querySelectorAll(".mobile-pad button")];
+// --- Audio Elements ---
+const audioIntro = document.getElementById('audio-intro');
+const audioBg = document.getElementById('audio-bg');
+const audioClick = document.getElementById('audio-click');
 
-const skillDetails = {
-  HTML: {
-    level: "Advanced",
-    projects: "Portfolio UI, document system, research dashboard",
-    experience: "Used for structure, accessible markup, and content-heavy interfaces.",
-  },
-  CSS: {
-    level: "Advanced",
-    projects: "Retro portfolio, dashboards, responsive layouts",
-    experience: "Used for visual systems, animation, and responsive interface design.",
-  },
-  JavaScript: {
-    level: "Advanced",
-    projects: "Portfolio interactions, project tools, workflow apps",
-    experience: "Used for DOM logic, local state, and product behavior.",
-  },
-  TypeScript: {
-    level: "Intermediate",
-    projects: "Speed Typing Test Web Application",
-    experience: "Used with React for typed frontend workflows and statistics.",
-  },
-  React: {
-    level: "Intermediate",
-    projects: "Speed Typing Test Web Application",
-    experience: "Used to build responsive application UI and live statistics interactions.",
-  },
-  "ASP.NET Core": {
-    level: "Intermediate",
-    projects: "CEU HR Ecosystem",
-    experience: "Used for Web API backend modules and service integration.",
-  },
-  "Node.js": {
-    level: "Intermediate",
-    projects: "Document & Quotation Management System",
-    experience: "Used for workflow features, file handling, and operational tools.",
-  },
-  APIs: {
-    level: "Intermediate",
-    projects: "Dashboard integrations and backend services",
-    experience: "Used for data handling and system communication.",
-  },
-  Authentication: {
-    level: "Intermediate",
-    projects: "CEU HR Ecosystem, document system",
-    experience: "Used in access control and role-based workflows.",
-  },
-  Bootstrap: {
-    level: "Intermediate",
-    projects: "CEU HR Ecosystem",
-    experience: "Used for responsive styling and UI components.",
-  },
-  Python: {
-    level: "Familiar",
-    projects: "Academic coursework and script automation",
-    experience: "Used for scripting, data manipulation, and basic logic.",
-  },
-  Git: {
-    level: "Intermediate",
-    projects: "All development projects",
-    experience: "Used for version control, branching, and repository management.",
-  },
-  PostgreSQL: {
-    level: "Intermediate",
-    projects: "Speed Typing Test Web Application",
-    experience: "Used for persistence in full-stack application work.",
-  },
-  "SQL Server": {
-    level: "Intermediate",
-    projects: "CEU HR Ecosystem",
-    experience: "Used for business modules and relational records.",
-  },
-  SQL: {
-    level: "Intermediate",
-    projects: "CEU HR Ecosystem, relational databases",
-    experience: "Used for complex queries, joins, and data manipulation.",
-  },
-  MongoDB: {
-    level: "Familiar",
-    projects: "Database path and project planning",
-    experience: "Part of Fernando's broader database toolkit.",
-  },
-  "Local Storage APIs": {
-    level: "Intermediate",
-    projects: "Document & Quotation Management System",
-    experience: "Used for browser-side persistence and workflow state.",
-  },
-  Arduino: {
-    level: "Intermediate",
-    projects: "RFID robot, automatic delivery robot, IoT builds",
-    experience: "Used for embedded prototyping, sensors, and hardware control.",
-  },
-  "RFID Systems": {
-    level: "Advanced project experience",
-    projects: "Autonomous RFID-Equipped Robot for Inventory Management",
-    experience: "Used for inventory scanning, asset identification, and research prototyping.",
-  },
-  AWS: {
-    level: "Familiar",
-    projects: "RFID inventory web application deployment",
-    experience: "Used as part of deployment planning and cloud delivery.",
-  },
-  Networking: {
-    level: "Practical internship experience",
-    projects: "Switch configuration, FDAS, CCTV, troubleshooting",
-    experience: "Used in technical support, office setup, and systems operations.",
-  },
-  "C++": {
-    level: "Intermediate",
-    projects: "Hardware automation and Arduino",
-    experience: "Used extensively in embedded systems and microcontrollers.",
-  },
-};
+// Helper to play click sound
+function playClick() {
+  audioClick.currentTime = 0;
+  audioClick.volume = 0.5;
+  audioClick.play().catch(e => console.log("Click audio blocked", e));
+}
 
-const questDetails = {
-  rfid: {
-    title: "Autonomous RFID-Equipped Robot for Inventory Management",
-    summary:
-      "A research and award-winning project that combines RFID hardware, robot movement, sensors, a web dashboard, database management, and deployment planning.",
-    points: [
-      "Built an autonomous RFID-based inventory solution for real-time monitoring and control.",
-      "Designed automation workflows for inventory tracking and data management.",
-      "Used Arduino, RFID, sensors, ESP32, HTML, CSS, JavaScript, database management, and AWS deployment planning.",
-      "Recognized through research competition awards and publication.",
-    ],
-  },
-  document: {
-    title: "Document & Quotation Management System",
-    summary:
-      "A full-stack internship project for internal business operations at JREMD Technologies, Inc.",
-    points: [
-      "Designed responsive interfaces for quotation tracking, file organization, approval workflows, and document version management.",
-      "Implemented file-management functionality, workflow automation, and operational tracking with JavaScript and Node.js.",
-      "Configured remote system access and deployment environments using Tailscale.",
-      "Performed end-to-end testing, debugging, optimization, and deployment independently.",
-    ],
-  },
-  hr: {
-    title: "CEU HR Ecosystem",
-    summary: "An ongoing full-stack HR management platform built around institutional HR workflows.",
-    points: [
-      "Includes applicant tracking, job posting management, authentication, payroll, leave management, and performance monitoring modules.",
-      "Uses C# ASP.NET Core Web API, EF Core, HTML, CSS, JavaScript, Bootstrap, and SQL Server Express.",
-      "Designed responsive user interfaces and integrated backend services for role management and data handling.",
-    ],
-  },
-  ceu_intern: {
-    title: "Computer Engineer Intern | Centro Escolar University",
-    summary: "Provided technical administrative support and optimized laboratory operations.",
-    points: [
-      "Optimized laboratory operations and technical administrative support for BSIT-related activities.",
-      "Prepared and updated laboratory manuals, documentation, and instructional materials.",
-      "Organized digital learning resources and technical files for faculty and student use.",
-      "Provided basic troubleshooting and technical support for laboratory systems and equipment.",
-      "Supported academic technology initiatives and documentation workflows."
-    ],
-  },
-  volleyball: {
-    title: "Volleyball Coach & Program Developer | Passion Sports",
-    summary: "Leadership role focused on structured athletic development and performance.",
-    points: [
-      "Designed structured volleyball training programs focused on athlete development and performance improvement.",
-      "Demonstrates leadership, communication, and the ability to coach players toward consistent process adoption."
-    ],
-  },
-  legal_admin: {
-    title: "Legal Administrative Coordinator | Iguidez-Onida Law",
-    summary: "Managed confidential documents and coordinated firm operations.",
-    points: [
-      "Managed confidential legal documents and client information with close attention to organization and security.",
-      "Coordinated schedules, client communications, and case-file organization using digital management practices."
-    ],
-  },
-};
+// --- DOM Elements ---
+const scene1 = document.getElementById('scene-1');
+const startOverlay = document.getElementById('start-overlay');
+const bootVideo = document.getElementById('boot-video');
+const introVideo = document.getElementById('intro-video');
+const skipHint = document.getElementById('skip-hint');
 
-const pokedexEntries = {
-  Reactmon: {
-    type: "Frontend",
-    level: 90,
-    description: "A powerful library used for building modern user interfaces and reusable component systems.",
-  },
-  Nodechu: {
-    type: "Backend",
-    level: 85,
-    description: "Known for handling APIs, servers, and workflow logic efficiently.",
-  },
-  Postgreon: {
-    type: "Database",
-    level: 82,
-    description: "A dependable relational engine for app data, analytics, and persistence.",
-  },
-  Rfidra: {
-    type: "Hardware",
-    level: 88,
-    description: "An embedded systems specialist that excels at RFID scanning and physical automation.",
-  },
-  Awsaur: {
-    type: "Deployment",
-    level: 76,
-    description: "A cloud partner that helps launch services and support scalable delivery.",
-  },
-  Tailspin: {
-    type: "Remote Access",
-    level: 72,
-    description: "A stealthy network helper used for secure remote connectivity and deployment setup.",
-  },
-};
+const screenWipe = document.getElementById('screen-wipe');
+const wipeBars = document.querySelectorAll('.wipe-bar');
 
-let soundEnabled = false;
-let audioContext = null;
-let brandClicks = 0;
+const introContainer = document.getElementById('intro-container');
+const mainMenuOverlay = document.getElementById('main-menu-overlay');
+const contentContainer = document.getElementById('content-container');
+const contentSections = document.querySelectorAll('.content-section');
+const menuItems = document.querySelectorAll('.menu-item');
+const btnBack = document.getElementById('btn-back');
 
-const revealObserver = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("is-visible");
-        revealObserver.unobserve(entry.target);
+// --- State ---
+let currentState = 'START_OVERLAY'; // START_OVERLAY, BOOT, TITLE, MENU_DIALOGUE, MENU_CHOICE, CONTENT
+let activeMenuIndex = 0;
+let audioUnlocked = false;
+let bootSkipAllowed = false;
+
+// --- Dialogue State ---
+let dialogueStep = 0;
+const introDialogue = [
+  "HELLO THERE! WELCOME TO MY WORLD! MY NAME IS FERNANDO.",
+  "I AM A COMPUTER ENGINEERING GRADUATE WITH A PASSION FOR BRIDGING THE GAP BETWEEN HARDWARE AND SOFTWARE.",
+  "NOW, WHAT DO YOU WANT TO KNOW ABOUT ME?"
+];
+const oakText = document.getElementById('oak-text');
+const oakChoices = document.getElementById('oak-choices');
+const oakNextArrow = document.getElementById('oak-next-arrow');
+
+// --- Typewriter State ---
+const sectionContentMap = {};
+contentSections.forEach(sec => {
+  const container = sec.querySelector('.typewriter-container');
+  if (container) {
+    sectionContentMap[sec.id] = container.innerHTML;
+  }
+});
+let typingInterval = null;
+let isTyping = false;
+let currentTypingElement = null;
+let currentTypingContent = '';
+let currentTypingCallback = null;
+
+function skipTyping() {
+  if (isTyping && currentTypingElement) {
+    isTyping = false;
+    clearTimeout(typingInterval);
+    currentTypingElement.innerHTML = currentTypingContent;
+    if (currentTypingCallback) currentTypingCallback();
+  }
+}
+
+function typeWriterHTML(element, htmlContent, speed, callback = null) {
+  element.innerHTML = '';
+  let i = 0;
+  let isTag = false;
+  let textBuffer = '';
+  isTyping = true;
+  currentTypingElement = element;
+  currentTypingContent = htmlContent;
+  currentTypingCallback = callback;
+  clearTimeout(typingInterval);
+  
+  function type() {
+    if (!isTyping) return;
+    
+    if (i < htmlContent.length) {
+      const char = htmlContent.charAt(i);
+      if (char === '<') isTag = true;
+      
+      textBuffer += char;
+      i++;
+      
+      if (isTag) {
+        if (char === '>') isTag = false;
+        type(); // Process HTML tags instantly
+      } else {
+        element.innerHTML = textBuffer;
+        typingInterval = setTimeout(type, speed);
       }
+    } else {
+      isTyping = false;
+      if (currentTypingCallback) currentTypingCallback();
+    }
+  }
+  type();
+}
+
+// Attempt to play intro music
+function tryPlayIntro() {
+  if (!audioUnlocked) {
+    audioUnlocked = true;
+  }
+}
+
+// --- Sequence Logic ---
+startOverlay.addEventListener('click', () => {
+  if (currentState === 'START_OVERLAY') {
+    startOverlay.classList.add('hidden');
+    startBootSequence();
+  }
+});
+
+function startBootSequence() {
+  currentState = 'BOOT';
+  bootVideo.classList.remove('hidden');
+  bootVideo.play().catch(e => console.log(e));
+  
+  // Allow skip after 3 seconds
+  setTimeout(() => {
+    if (currentState === 'BOOT') {
+      bootSkipAllowed = true;
+      skipHint.classList.remove('hidden');
+    }
+  }, 3000);
+}
+
+bootVideo.addEventListener('ended', () => {
+  if (currentState === 'BOOT') {
+    proceedToTitle();
+  }
+});
+
+function proceedToTitle() {
+  currentState = 'TITLE';
+  skipHint.classList.add('hidden');
+  bootVideo.classList.add('hidden');
+  bootVideo.pause();
+  
+  introVideo.classList.remove('hidden');
+  introVideo.play();
+  
+  audioIntro.volume = 0.5;
+  audioIntro.play().catch(e => console.log(e));
+}
+
+function triggerWipeTransition(callback) {
+  screenWipe.classList.remove('hidden');
+  
+  wipeBars.forEach((bar, index) => {
+    setTimeout(() => {
+      bar.style.transform = 'scaleX(1)';
+    }, index * 100);
+  });
+
+  setTimeout(() => {
+    callback();
+    // Hide wipe
+    wipeBars.forEach(bar => bar.style.transform = 'scaleX(0)');
+    setTimeout(() => screenWipe.classList.add('hidden'), 500);
+  }, 1000);
+}
+
+// --- Menu Logic ---
+function playDialogueStep() {
+  oakNextArrow.classList.add('hidden');
+  typeWriterHTML(oakText, introDialogue[dialogueStep], 40, () => {
+    if (dialogueStep < introDialogue.length - 1) {
+      oakNextArrow.classList.remove('hidden');
+    } else {
+      oakChoices.classList.remove('hidden');
+      currentState = 'MENU_CHOICE';
+    }
+  });
+}
+
+function advanceDialogue() {
+  if (currentState === 'MENU_DIALOGUE' && dialogueStep < introDialogue.length - 1) {
+    dialogueStep++;
+    playClick();
+    playDialogueStep();
+  }
+}
+
+function updateMenu() {
+  menuItems.forEach((item, index) => {
+    if (index === activeMenuIndex) {
+      item.classList.add('active');
+    } else {
+      item.classList.remove('active');
+    }
+  });
+}
+
+function openSection(targetId) {
+  playClick();
+  currentState = 'CONTENT';
+  
+  mainMenuOverlay.classList.add('hidden');
+  contentSections.forEach(sec => sec.classList.add('hidden'));
+  
+  contentContainer.classList.remove('hidden');
+  const targetSection = document.getElementById(targetId);
+  if (targetSection) {
+    targetSection.classList.remove('hidden');
+    // Start typing effect for section
+    const container = targetSection.querySelector('.typewriter-container');
+    if (container && sectionContentMap[targetId]) {
+      typeWriterHTML(container, sectionContentMap[targetId], 35); // Slowed from 10 to 35
+    }
+  }
+}
+
+function backToMenu() {
+  playClick();
+  currentState = 'MENU_CHOICE';
+  contentContainer.classList.add('hidden');
+  mainMenuOverlay.classList.remove('hidden');
+  
+  // Stop ongoing typing
+  isTyping = false;
+  clearTimeout(typingInterval);
+  
+  // Show choices immediately
+  oakText.innerHTML = introDialogue[introDialogue.length - 1];
+  oakNextArrow.classList.add('hidden');
+  oakChoices.classList.remove('hidden');
+}
+
+function proceedToMenu() {
+  if (currentState === 'TITLE') {
+    playClick();
+    
+    audioIntro.pause();
+    audioBg.volume = 0.4;
+    audioBg.play().catch(e => console.log(e));
+    
+    triggerWipeTransition(() => {
+      introContainer.classList.add('hidden');
+      mainMenuOverlay.classList.remove('hidden');
+      currentState = 'MENU_DIALOGUE';
+      dialogueStep = 0;
+      updateMenu();
+      
+      playDialogueStep();
     });
-  },
-  {
-    threshold: 0.14,
-    rootMargin: "0px 0px -40px 0px",
-  }
-);
-
-revealElements.forEach((element) => revealObserver.observe(element));
-
-const sectionObserver = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((entry) => {
-      if (!entry.isIntersecting) {
-        return;
-      }
-
-      const chapter = entry.target.dataset.chapter;
-      const id = entry.target.id;
-
-      if (activeChapter) {
-        activeChapter.textContent = `Current location: ${chapter}`;
-      }
-
-      navLinks.forEach((link) => {
-        link.classList.toggle("is-active", link.getAttribute("href") === `#${id}`);
-      });
-
-      mapNodes.forEach((node) => {
-        node.classList.toggle("is-active", node.getAttribute("href") === `#${id}`);
-      });
-
-      const index = Math.max(0, sections.findIndex((section) => section.id === id));
-    });
-  },
-  {
-    threshold: 0.42,
-  }
-);
-
-sections.forEach((section) => sectionObserver.observe(section));
-
-function updateStoryProgress() {
-  const scrollTop = window.scrollY || document.documentElement.scrollTop;
-  const height = document.documentElement.scrollHeight - window.innerHeight;
-  const progress = height > 0 ? (scrollTop / height) * 100 : 0;
-  if (storyProgress) {
-    storyProgress.style.width = `${Math.min(100, Math.max(0, progress))}%`;
   }
 }
 
-function playTone() {
-  if (!soundEnabled) {
-    return;
+// --- Event Listeners ---
+
+// Any click unlocks audio if not already unlocked
+document.addEventListener('click', (e) => {
+  if (!audioUnlocked) {
+    tryPlayIntro();
+  }
+  // Click to skip typing
+  if (isTyping) {
+    skipTyping();
+  }
+});
+
+scene1.addEventListener('click', (e) => {
+  if (currentState === 'TITLE') {
+    e.stopPropagation();
+    proceedToMenu();
+  }
+});
+
+window.addEventListener('keydown', (e) => {
+  if (isTyping && (e.key === 'Enter' || e.key === ' ')) {
+    skipTyping();
+    return; // Don't trigger other Enter logic if we just skipped text
   }
 
-  audioContext ||= new AudioContext();
-  const oscillator = audioContext.createOscillator();
-  const gain = audioContext.createGain();
-  oscillator.type = "sine";
-  oscillator.frequency.value = 620;
-  gain.gain.setValueAtTime(0.025, audioContext.currentTime);
-  gain.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.12);
-  oscillator.connect(gain);
-  gain.connect(audioContext.destination);
-  oscillator.start();
-  oscillator.stop(audioContext.currentTime + 0.12);
-}
-
-function showToast(message) {
-  if (!toast) {
-    return;
+  if (currentState === 'START_OVERLAY' && e.key === 'Enter') {
+    startOverlay.click();
+  } else if (currentState === 'BOOT' && e.key === 'Enter' && bootSkipAllowed) {
+    proceedToTitle();
+  } else if (currentState === 'TITLE' && e.key === 'Enter') {
+    proceedToMenu();
+  } else if (currentState === 'MENU_DIALOGUE' && (e.key === 'Enter' || e.key === ' ')) {
+    advanceDialogue();
   }
-
-  toast.textContent = message;
-  toast.classList.add("is-visible");
-  window.clearTimeout(showToast.timer);
-  showToast.timer = window.setTimeout(() => {
-    toast.classList.remove("is-visible");
-  }, 2600);
-}
-
-function openModal(title, summary, points) {
-  if (!modalContent || !modal) {
-    return;
+  
+  if (currentState === 'MENU_CHOICE') {
+    if (e.key === 'ArrowDown') {
+      activeMenuIndex = (activeMenuIndex + 1) % menuItems.length;
+      updateMenu();
+      playClick();
+    } else if (e.key === 'ArrowUp') {
+      activeMenuIndex = (activeMenuIndex - 1 + menuItems.length) % menuItems.length;
+      updateMenu();
+      playClick();
+    } else if (e.key === 'Enter') {
+      const target = menuItems[activeMenuIndex].getAttribute('data-target');
+      openSection(target);
+    }
   }
-
-  modalContent.innerHTML = `
-    <h3>${title}</h3>
-    <p>${summary}</p>
-    <ul>${points.map((point) => `<li>${point}</li>`).join("")}</ul>
-  `;
-
-  if (typeof modal.showModal === "function") {
-    modal.showModal();
-  } else {
-    modal.setAttribute("open", "");
+  
+  if (currentState === 'CONTENT' && e.key === 'Backspace') {
+    backToMenu();
   }
+});
 
-  playTone();
-}
 
-document.querySelectorAll("[data-skill]").forEach((button) => {
-  button.addEventListener("click", () => {
-    const name = button.dataset.skill;
-    const detail = skillDetails[name];
-
-    if (!detail) {
+menuItems.forEach((item, index) => {
+  item.addEventListener('mouseenter', () => {
+    if (currentState === 'MENU' && activeMenuIndex !== index) {
+      activeMenuIndex = index;
+      updateMenu();
+      playClick();
+    }
+  });
+  
+  item.addEventListener('click', (e) => {
+    if (isTyping) {
+      e.stopPropagation();
       return;
     }
-
-    openModal(name, `Proficiency: ${detail.level}`, [
-      `Projects using this skill: ${detail.projects}`,
-      detail.experience,
-    ]);
-  });
-});
-
-document.querySelectorAll("[data-quest]").forEach((button) => {
-  button.addEventListener("click", () => {
-    const detail = questDetails[button.dataset.quest];
-    if (detail) {
-      openModal(detail.title, detail.summary, detail.points);
+    
+    if (currentState === 'MENU_CHOICE') {
+      const target = item.getAttribute('data-target');
+      openSection(target);
     }
   });
 });
 
-document.querySelectorAll("[data-achievement]").forEach((button) => {
-  button.addEventListener("click", () => {
-    showToast(`Badge unlocked: ${button.dataset.achievement}`);
-    playTone();
-  });
-});
+btnBack.addEventListener('click', backToMenu);
 
-document.querySelectorAll("[data-entry]").forEach((button) => {
-  button.addEventListener("click", () => {
-    const entry = pokedexEntries[button.dataset.entry];
-    if (!entry) {
-      return;
-    }
-
-    openModal(button.dataset.entry, `${entry.type} type | Level ${entry.level}`, [entry.description, "Collected in Fernando's tech Pokédex."]);
-  });
-});
-
-document.querySelectorAll("a, button").forEach((element) => {
-  element.addEventListener("click", () => {
-    if (!element.matches("[data-skill], [data-quest], [data-achievement], [data-entry]")) {
-      playTone();
-    }
-  });
-});
-
-modalClose?.addEventListener("click", () => {
-  modal?.close();
-});
-
-modal?.addEventListener("click", (event) => {
-  const modalBox = modal.getBoundingClientRect();
-  const isOutside =
-    event.clientX < modalBox.left ||
-    event.clientX > modalBox.right ||
-    event.clientY < modalBox.top ||
-    event.clientY > modalBox.bottom;
-
-  if (isOutside) {
-    modal.close();
-  }
-});
-
-themeToggle?.addEventListener("click", () => {
-  document.body.classList.toggle("day-mode");
-  const isDay = document.body.classList.contains("day-mode");
-  themeToggle.setAttribute("aria-label", isDay ? "Toggle night mode" : "Toggle day mode");
-  showToast(isDay ? "Day mode activated" : "Night mode activated");
-});
-
-soundToggle?.addEventListener("click", () => {
-  soundEnabled = !soundEnabled;
-  soundToggle.classList.toggle("is-active", soundEnabled);
-  soundToggle.setAttribute(
-    "aria-label",
-    soundEnabled ? "Turn interface sound off" : "Turn interface sound on"
-  );
-  showToast(soundEnabled ? "Interface sound enabled" : "Interface sound muted");
-  playTone();
-});
-
-brand?.addEventListener("click", () => {
-  brandClicks += 1;
-
-  if (brandClicks === 5) {
-    showToast("Secret achievement unlocked: Persistent Builder");
-    if (storyProgress) {
-      storyProgress.style.width = "100%";
-    }
-    playTone();
-  }
-});
-
-function scrollByViewport(direction) {
-  const amount = Math.round(window.innerHeight * 0.72);
-  const horizontal = Math.round(window.innerWidth * 0.5);
-
-  switch (direction) {
-    case "up":
-      window.scrollBy({ top: -amount, behavior: "smooth" });
-      break;
-    case "down":
-      window.scrollBy({ top: amount, behavior: "smooth" });
-      break;
-    case "left":
-      window.scrollBy({ left: -horizontal, behavior: "smooth" });
-      break;
-    case "right":
-      window.scrollBy({ left: horizontal, behavior: "smooth" });
-      break;
-    default:
-      break;
-  }
-
-  showToast(`Moved ${direction}`);
-  playTone();
-}
-
-mobileButtons.forEach((button) => {
-  button.addEventListener("click", () => {
-    scrollByViewport(button.dataset.direction);
-  });
-});
-
-window.addEventListener("keydown", (event) => {
-  if (event.altKey || event.metaKey || event.ctrlKey) {
-    return;
-  }
-
-  const key = event.key.toLowerCase();
-
-  if (["arrowup", "w"].includes(key)) {
-    scrollByViewport("up");
-  } else if (["arrowdown", "s"].includes(key)) {
-    scrollByViewport("down");
-  } else if (["arrowleft", "a"].includes(key)) {
-    scrollByViewport("left");
-  } else if (["arrowright", "d"].includes(key)) {
-    scrollByViewport("right");
-  }
-});
-
-window.addEventListener("scroll", updateStoryProgress, { passive: true });
-window.addEventListener("resize", updateStoryProgress);
-updateStoryProgress();
-
-const currentYear = document.getElementById("current-year");
-if (currentYear) {
-  currentYear.textContent = new Date().getFullYear();
-}
+// Do not automatically start sequence; wait for startOverlay click to satisfy browser audio requirements
