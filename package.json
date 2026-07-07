@@ -1,0 +1,11 @@
+{
+  "name": "fernando-banal-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Static portfolio website for Fernando Jr. H. Banal",
+  "scripts": {
+    "dev": "node server.js",
+    "start": "node server.js",
+    "check": "node --check script.js && node --check server.js"
+  }
+}

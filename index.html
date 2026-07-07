@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fernando Banal | Choose Experience</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;800&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: #0A0A0E;
+      color: white;
+      font-family: 'Outfit', sans-serif;
+    }
+    h1 {
+      margin-bottom: 3rem;
+      font-size: clamp(2rem, 5vw, 3rem);
+      text-align: center;
+    }
+    .cards {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 0 2rem;
+    }
+    .card {
+      width: 320px;
+      height: 420px;
+      border-radius: 20px;
+      overflow: hidden;
+      cursor: pointer;
+      position: relative;
+      text-decoration: none;
+      color: white;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 2rem;
+      box-sizing: border-box;
+    }
+    .card:hover {
+      transform: translateY(-10px);
+    }
+    .card-modern {
+      background: linear-gradient(135deg, #1A1A24 0%, #0A0A0E 100%);
+      border: 1px solid rgba(255,255,255,0.1);
+      box-shadow: 0 20px 40px rgba(255, 193, 7, 0.1);
+    }
+    .card-modern:hover {
+      box-shadow: 0 20px 40px rgba(255, 193, 7, 0.3);
+      border-color: #FFC107;
+    }
+    .card-pokemon {
+      background: #80c0a8;
+      border: 4px solid #000;
+      box-shadow: 8px 8px 0px rgba(0,0,0,0.5);
+      font-family: 'Press Start 2P', cursive;
+      color: #000;
+    }
+    .card-pokemon:hover {
+      box-shadow: 12px 12px 0px rgba(0,0,0,0.6);
+      transform: translate(-4px, -4px);
+    }
+    .card h2 {
+      margin: 0 0 1rem 0;
+      font-size: 1.8rem;
+    }
+    .card-pokemon h2 {
+      font-size: 1.2rem;
+      line-height: 1.5;
+    }
+    .card p {
+      margin: 0;
+      opacity: 0.8;
+      font-size: 1rem;
+    }
+    .card-pokemon p {
+      font-size: 0.7rem;
+      line-height: 1.5;
+    }
+    .decor {
+      font-size: 4rem;
+      margin-bottom: 2rem;
+      opacity: 0.5;
+    }
+  </style>
+</head>
+<body>
+  <h1>Choose Your Experience</h1>
+  <div class="cards">
+    <a href="modern.html" class="card card-modern" onclick="setTheme('modern')">
+      <div class="decor">💻</div>
+      <h2>Modern Tech</h2>
+      <p>Sleek, responsive, and animated.</p>
+    </a>
+    <a href="pokemon.html" class="card card-pokemon" onclick="setTheme('pokemon')">
+      <div class="decor" style="opacity: 1;">👾</div>
+      <h2>Retro Pokemon</h2>
+      <p>Interactive, nostalgic, and fun.</p>
+    </a>
+  </div>
+
+  <script>
+    function setTheme(theme) {
+      localStorage.setItem('portfolio_choice', theme);
+    }
+
+    // Auto-redirect if they already made a choice (unless they clicked "Change Theme")
+    const urlParams = new URLSearchParams(window.location.search);
+    if (!urlParams.has('reset')) {
+      const choice = localStorage.getItem('portfolio_choice');
+      if (choice === 'modern') window.location.href = 'modern.html';
+      if (choice === 'pokemon') window.location.href = 'pokemon.html';
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fernando Banal | Software & Systems Engineer</title>
+  <meta name="description" content="Portfolio of Fernando Jr. H. Banal - Computer Engineer, Full-Stack Developer, and Embedded Systems Specialist.">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="./pokemon-styles.css">
+</head>
+<body>
+
+  <!-- Audio -->
+  <audio id="audio-intro" src="resources/Pokemon%20Charizard%20Intro%20Sound.mp3" preload="auto" loop></audio>
+  <audio id="audio-bg" src="resources/Pokemon%20BG%20Music.mp3" preload="auto" loop></audio>
+  <audio id="audio-click" src="resources/Pokemon%20Click%20Button.mp3" preload="auto"></audio>
+
+  <!-- Global Audio Toggle Button -->
+  <button id="btn-audio-toggle" class="retro-btn audio-btn">
+    <span class="icon">♪</span>
+    <span class="text">ON</span>
+  </button>
+
+  <!-- Interactive Intro Sequence -->
+  <div id="intro-container">
+    
+    <!-- Scene 1: Title Screen -->
+    <div id="scene-1" class="scene">
+      <div id="start-overlay" class="overlay-text blink">CLICK ANYWHERE TO BOOT UP</div>
+      <video id="boot-video" src="resources/1st%20Landing%20Page%20Intro.mp4" playsinline class="hidden"></video>
+      <video id="intro-video" src="resources/Landing%20Page%20Intro.mp4" loop muted playsinline class="hidden"></video>
+      <div id="skip-hint" class="hidden">PRESS ENTER TO SKIP</div>
+    </div>
+
+  </div>
+
+  <!-- Screen Wipe Transition -->
+  <div id="screen-wipe" class="hidden">
+    <div class="wipe-bar"></div>
+    <div class="wipe-bar"></div>
+    <div class="wipe-bar"></div>
+    <div class="wipe-bar"></div>
+    <div class="wipe-bar"></div>
+  </div>
+
+  <!-- Main Menu Overlay (Oak Intro Style) -->
+  <div id="main-menu-overlay" class="overlay hidden oak-bg">
+    <div class="oak-layout">
+      
+      <!-- Choices menu (Top Left) -->
+      <div class="oak-choice-box hidden" id="oak-choices">
+        <div class="menu-item active" data-target="projects">
+          <span class="cursor">▶</span><span class="text">PROJECTS</span>
+        </div>
+        <div class="menu-item" data-target="about">
+          <span class="cursor">▶</span><span class="text">ABOUT ME</span>
+        </div>
+        <div class="menu-item" data-target="experience">
+          <span class="cursor">▶</span><span class="text">EXPERIENCE</span>
+        </div>
+        <div class="menu-item" data-target="skills">
+          <span class="cursor">▶</span><span class="text">SKILLS</span>
+        </div>
+        <div class="menu-item" data-target="awards">
+          <span class="cursor">▶</span><span class="text">AWARDS & CERT</span>
+        </div>
+        <div class="menu-item" data-target="contact">
+          <span class="cursor">▶</span><span class="text">CONTACT</span>
+        </div>
+      </div>
+
+      <!-- Trainer Character (Center Right) -->
+      <div class="oak-trainer-graphic">
+        <div class="trainer-shadow"></div>
+        <div id="trainer-sprite" class="trainer-sprite" aria-label="Trainer Fernando"></div>
+      </div>
+      
+      <!-- Dialogue Box (Bottom) -->
+      <div class="oak-dialog-box" id="oak-dialog">
+        <p class="typewriter-container" id="oak-text"></p>
+        <div class="red-arrow blink hidden" id="oak-next-arrow">▼</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Content Sections (Hidden by default) -->
+  <main id="content-container" class="hidden">
+    
+    <!-- Global Back Button & Theme Button -->
+    <div class="top-bar" style="display: flex; gap: 10px;">
+      <button id="btn-back" class="retro-btn">&lt; BACK</button>
+      <a href="index.html?reset=true" class="retro-btn" style="text-decoration: none;">CHANGE THEME</a>
+    </div>
+
+    <!-- About Section -->
+    <section id="about" class="content-section hidden">
+      <div class="dialog-box full-box scrollable">
+        <h2 class="section-title">ABOUT ME</h2>
+        <div class="typewriter-container">
+          <p class="typing-text">
+            I am a Computer Engineering graduate with hands-on experience in full-stack development, embedded systems, networking, and technical support.
+            <br><br>
+            My focus is on developing robust solutions—from HR systems and document management platforms to hardware integrations and IoT-based research projects. I am deeply recognized for award-winning technical innovations and published research, always striving to bridge the gap between hardware and software.
+          </p>
+          <div class="education-block mt-2">
+            <h3>> EDUCATION</h3>
+            <p><strong>Centro Escolar University</strong><br>BS Computer Engineering (Aug 2022 – 2026)</p>
+            <br>
+            <p><strong>Pamantasan ng Lungsod ng Maynila</strong><br>Coursework in BS Civil Engineering (Jun 2018 – 2020)</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="content-section hidden">
+      <div class="dialog-box full-box scrollable">
+        <h2 class="section-title">TECHNICAL ARSENAL</h2>
+        <div class="typewriter-container">
+          <h3>> PROGRAMMING</h3>
+          <p>Python, JavaScript, TypeScript, C++, HTML, CSS, SQL</p>
+          <br>
+          <h3>> FRAMEWORKS & TOOLS</h3>
+          <p>React, Bootstrap, ASP.NET Core, Git, VS Code, SSMS</p>
+          <br>
+          <h3>> DATABASES</h3>
+          <p>SQL Server, PostgreSQL, MongoDB, Local Storage APIs</p>
+          <br>
+          <h3>> NETWORKING & SYSTEMS</h3>
+          <p>Switch Configuration, FDAS, CCTV Systems, Tailscale, Troubleshooting & Technical Support</p>
+          <br>
+          <h3>> EMBEDDED SYSTEMS</h3>
+          <p>Arduino, ESP32/ESP Systems, RFID Systems, Sensors, IoT Integration</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="content-section hidden">
+      <div class="dialog-box full-box scrollable">
+        <h2 class="section-title">EXPERIENCE</h2>
+        <div class="typewriter-container">
+          <h3>> FREELANCE FULL-STACK & EMBEDDED DEV</h3>
+          <p>Self-Employed (Feb 2025 - Present)</p>
+          <p>- Developed websites and web applications using HTML, CSS, JS.</p>
+          <p>- Built embedded systems & IoT solutions using Arduino, ESP32, C/C++.</p>
+          <p>- Integrated microcontrollers with web-based software for real-time monitoring and control.</p>
+          <br>
+          <h3>> SYSTEMS DEV & TECH SUPPORT INTERN</h3>
+          <p>JREMD Technologies, Inc. (Mar 2026 - Apr 2026)</p>
+          <p>- Developed responsive frontend enhancements for a Document and Quotation Management System.</p>
+          <p>- Configured remote access and deployment environments using Tailscale.</p>
+          <p>- Managed switch configurations and internet troubleshooting for office operations.</p>
+          <br>
+          <h3>> COMPUTER ENGINEER INTERN</h3>
+          <p>Centro Escolar University (Mar 2026)</p>
+          <p>- Optimized laboratory operations and provided technical administrative support.</p>
+          <p>- Provided basic troubleshooting and technical support for laboratory systems and equipment.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="content-section hidden">
+      <div class="dialog-box full-box scrollable">
+        <h2 class="section-title">PROJECTS & AWARDS</h2>
+        <div class="typewriter-container">
+          <h3>> RFID-ENABLED AUTONOMOUS INVENTORY ROBOT</h3>
+          <p>Designed a 4-wheeled autonomous robot with a UHF RFID scanner for real-time inventory monitoring. Deployed a web dashboard on AWS EC2 to automate inventory tracking, obstacle avoidance, and remote monitoring.</p>
+          <video controls width="100%" class="project-video mt-2" style="border: 2px solid var(--dialog-border); border-radius: 4px;">
+            <source src="assets/rfid-robot-demo.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+          <a href="#" class="retro-link" style="display:block; margin-top: 5px;">[ LINK: View Repository / Demo ]</a>
+          <br>
+          
+          <h3>> DOC & QUOTATION MANAGEMENT SYSTEM</h3>
+          <p>Web-based system developed to streamline internal business operations, featuring document organization, quotation tracking, and centralized record management features.</p>
+          <a href="#" class="retro-link">[ LINK: View Project ]</a>
+          <br><br>
+
+          <h3>> SPEEDTYPING LEARNING PLATFORM</h3>
+          <p>Developed a web-based typing improvement platform featuring structured lessons, exercises, and real-time WPM/accuracy tracking to measure user performance.</p>
+          <a href="https://speedtypingtest.lovable.app/" target="_blank" class="retro-link">[ LINK: View Project ]</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Awards Section -->
+    <section id="awards" class="content-section hidden">
+      <div class="dialog-box full-box scrollable">
+        <h2 class="section-title">AWARDS & CERTIFICATIONS</h2>
+        <div class="typewriter-container">
+          <h3>> AWARDS & HONORS</h3>
+          <p>- <strong>1st Place</strong>: Oral/Paper Competition, Search for Best Undergraduate Research 2025</p>
+          <p>- <strong>1st Runner-Up</strong>: 17th Annual University Research Forum</p>
+          <p>- <strong>Selected Talent</strong>: UNLEASH Philippines Innovation Lab (2025)</p>
+          <br>
+          <h3>> PUBLICATIONS</h3>
+          <p>- <strong>Published Research</strong>: Int. Journal of Science Architecture Technology & Environment (DOI: 10.63680/ijsate0226017.017)</p>
+          <p>- <strong>Published Research</strong>: Global Journal of Arts, Humanities and Social Sciences (LMS page views & board-exam outcomes)</p>
+          <br>
+          <h3>> CERTIFICATIONS & CREDENTIALS</h3>
+          <p>- Fortinet Cybersecurity Certifications</p>
+          <p>- EnGenius Wireless/Network Certifications</p>
+          <p>- Advanced Coursework: Embedded Machine Learning, IoT boards, FPGA systems</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="content-section hidden">
+      <div class="dialog-box full-box">
+        <h2 class="section-title">CONTACT TRAINER FERNANDO</h2>
+        <div class="typewriter-container text-center">
+          <p>A wild OPPORTUNITY appeared!</p>
+          <br>
+          <p>Email: fernandobanal23@gmail.com</p>
+          <p>Phone: +63 927 088 2907</p>
+          <br>
+          <a href="mailto:fernandobanal23@gmail.com" class="retro-btn inline-btn">USE ITEM: EMAIL</a>
+          <br><br>
+          <div class="social-links mt-2">
+            <a href="https://linkedin.com/in/fernandobanal" target="_blank" class="retro-link">LINKEDIN</a> | 
+            <a href="https://github.com/iamunholy" target="_blank" class="retro-link">GITHUB</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+  
+  <script src="./pokemon-script.js"></script>
+</body>
+</html>
